@@ -5,7 +5,7 @@ from product.models import *
 from .forms import *
 # Create your views here.
 from home.models import *
-from django.utils.translation import gettext as _
+
 
 def index(request):
     setting = Setting.objects.all()
@@ -39,7 +39,7 @@ def about(request):
     setting = Setting.objects.all()
     category = Category.objects.all()
 
-    return render(request,'about.html',{'setting':setting,'category':category,'HELLO':_('Hello')})
+    return render(request,'about.html',{'setting':setting,'category':category})
 
 
 def contact(request):

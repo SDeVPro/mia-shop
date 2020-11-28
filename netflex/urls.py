@@ -7,8 +7,7 @@ from home import views
 
 urlpatterns = [
     path('product',include('product.urls')),
-    path('',include('home.urls')),
-
+    path('',include('home.urls')),# '' - bu home
     path('faq/', views.faq, name='faq'),
     path('admin/', admin.site.urls),
     path('ckeditor', include('ckeditor_uploader.urls')),
