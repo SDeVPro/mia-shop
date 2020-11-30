@@ -153,7 +153,7 @@ def lic_detail(request, id):
     category = Category.objects.all()
     product = Product.objects.all().order_by('?')[:8]
     lic = License.objects.get(pk=id)
-    images = ImagesLic.objects.filter(lic_id=id)
+    images = ImagesLic.objects.filter(license_id=id)
     context = {
         'lic':lic,
         'category':category,
