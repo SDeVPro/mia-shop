@@ -27,7 +27,7 @@ class Product(models.Model):
     )
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, unique=True)
-    keywords = models.CharField(max_length=255, unique=True)
+    keywords = models.CharField(max_length=255)
     description = models.CharField(blank=True, max_length=255)
     image = models.ImageField(upload_to='images/', blank=True)
     price = models.FloatField()
@@ -43,6 +43,7 @@ class Product(models.Model):
         return self.title
     def get_absolute_url(self):
         return reverse('category_detail',kwargs={'slug':self.slug})
+
     def image_tag(self):
         return mark_safe('<img src="{}" height="50"/>'.format(self.image.url))
     image_tag.short_description='Image'
@@ -69,16 +70,16 @@ class Images(models.Model):
 
 class Comment(models.Model):
     STATUS = (
-        ('Mavjud', 'Mavjud'),
-        ('Mavjud emas', 'Mavjud emas'),
+        ('True', 'Mavjud'),
+        ('False', 'Mavjud emas'),
     )
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product=models.ForeignKey(Product, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    subject = models.CharField(max_length=55, blank=True,help_text='Izoh mazmuni')
-    comment = models.TextField(max_length=500, blank=True,help_text='Izoh')
+    subject = models.CharField(max_length=55, blank=True)
+    comment=models.CharField(max_length=255, blank=True)
     rate = models.IntegerField(default=1)
     ip = models.CharField(max_length=20, blank=True)
-    status = models.CharField(max_length=20, choices=STATUS, default='Mavjud')
+    status = models.CharField(max_length=10,choices=STATUS, default='True')
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
 
@@ -88,5 +89,4 @@ class Comment(models.Model):
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
-        fields = ['subject','comment','rate']
-
+        fields = ['subject', 'comment', 'rate']
